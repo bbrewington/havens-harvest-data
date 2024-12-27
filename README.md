@@ -8,6 +8,7 @@ The subfolder `/data` is a `uv` project, with Python code in the `/data/src` fol
 
 ```bash
 cd data
+uv venv .venv
 source .venv/Scripts/activate
 python src/food_rescue_hero.py
 ```
