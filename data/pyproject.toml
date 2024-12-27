@@ -1,0 +1,11 @@
+[project]
+name = "data"
+version = "0.1.0"
+description = "Python-based data automation for havens-harvest-data repo"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "beautifulsoup4>=4.12.3",
+    "python-dotenv>=1.0.1",
+    "requests>=2.32.3",
+]
