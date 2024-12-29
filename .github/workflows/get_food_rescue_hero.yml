@@ -27,7 +27,7 @@ jobs:
         env:
           FOOD_RESCUE_HERO_USERNAME: ${{ secrets.FOOD_RESCUE_HERO_USERNAME }}
           FOOD_RESCUE_HERO_PASSWORD: ${{ secrets.FOOD_RESCUE_HERO_PASSWORD }}
-        run: uv run python src/food_rescue_hero.py --dest-file-path /tmp/csv/rescues.csv
+        run: uv run python data/src/food_rescue_hero.py --dest-file-path /tmp/csv/rescues.csv
   
       - name: Confirm CSV exists
         run: |
