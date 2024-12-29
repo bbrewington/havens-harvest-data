@@ -35,7 +35,7 @@ jobs:
       - name: Confirm CSV exists
         run: |
           echo 'Listing files in data dir'
-          ls $GITHUB_WORKSPACE
+          ls $GITHUB_WORKSPACE/data
   
   upload-to-gcs:
     runs-on: ubuntu-latest
