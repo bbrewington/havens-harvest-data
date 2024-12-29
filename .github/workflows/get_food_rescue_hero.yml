@@ -30,14 +30,15 @@ jobs:
         env:
           FOOD_RESCUE_HERO_USERNAME: ${{ secrets.FOOD_RESCUE_HERO_USERNAME }}
           FOOD_RESCUE_HERO_PASSWORD: ${{ secrets.FOOD_RESCUE_HERO_PASSWORD }}
-        run: uv run python data/src/food_rescue_hero.py --dest-file-path $REPORT_FILE
+        run: uv run python data/src/food_rescue_hero.py --dest-file-path ${{ github.workspace }}/data/rescues.csv
+  
+      - name: Confirm CSV exists
+        run: |
+          echo 'Listing files in data dir'
+          ls $GITHUB_WORKSPACE
   
   upload-to-gcs:
     runs-on: ubuntu-latest
-    
-    permissions:
-      contents: 'read'
-      id-token: 'write'
     
     steps:
     - id: 'checkout'
@@ -47,15 +48,6 @@ jobs:
       uses: 'google-github-actions/auth@v2'
       with:
         credentials_json: '${{ secrets.GCP_SERVICE_ACCT_JSON }}'
-    
-    - id: 'temp-list-files'
-      run: |
-        echo 'listing files in current dir:'
-        ls .
-        echo 'listing files in "data" folder:'
-        ls data
-        echo 'listing files in "data/src" folder:'
-        ls data/src
 
     - id: 'upload-file'
       uses: 'google-github-actions/upload-cloud-storage@v2'
