@@ -3,9 +3,6 @@ name: Get Food Rescue Hero Data
 on:
   workflow_dispatch:
 
-env:
-  REPORT_FILE: data/rescues.csv
-
 jobs:
   get-rescues-report:
     runs-on: ubuntu-latest
@@ -27,17 +24,15 @@ jobs:
           uv pip install -r data/pyproject.toml
       
       - name: Run Python script to get data
-        working-directory: data
         env:
           FOOD_RESCUE_HERO_USERNAME: ${{ secrets.FOOD_RESCUE_HERO_USERNAME }}
           FOOD_RESCUE_HERO_PASSWORD: ${{ secrets.FOOD_RESCUE_HERO_PASSWORD }}
-        run: uv run python src/food_rescue_hero.py --dest-file-path rescues.csv
+        run: uv run python src/food_rescue_hero.py --dest-file-path /tmp/csv/rescues.csv
   
       - name: Confirm CSV exists
-        working-directory: data
         run: |
-          echo 'Listing files in data dir'
-          ls .
+          echo 'Listing files in /tmp/csv dir'
+          ls /tmp/csv
   
   upload-to-gcs:
     runs-on: ubuntu-latest
@@ -55,5 +50,5 @@ jobs:
     - id: 'upload-file'
       uses: 'google-github-actions/upload-cloud-storage@v2'
       with:
-        path: 'rescues.csv'
-        destination: marta-realtime-data
+        path: '/tmp/csv/rescues.csv'
+        destination: havens-harvest-data
