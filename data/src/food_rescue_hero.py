@@ -4,6 +4,7 @@ import os
 from bs4 import BeautifulSoup
 import urllib
 from argparse import ArgumentParser
+from pathlib import Path
 
 FROM_DATE = urllib.parse.quote("09/28/2024", safe="")
 TO_DATE = urllib.parse.quote("12/27/2024", safe="")
@@ -36,6 +37,7 @@ def get_rescues_report(username, password):
     return rescues.text
 
 def write_to_file(dest_file_path, csv_contents):
+    Path(dest_file_path).parent.mkdir(parents=True, exist_ok=True)
     with open(dest_file_path, "w", encoding="utf-8") as f:
         f.write(csv_contents)
 
