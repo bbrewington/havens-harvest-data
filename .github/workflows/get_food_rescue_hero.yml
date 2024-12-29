@@ -46,9 +46,7 @@ jobs:
     - id: 'auth'
       uses: 'google-github-actions/auth@v2'
       with:
-        project_id: 'data-projects-348920'
-        workload_identity_provider: projects/407455095437/locations/global/workloadIdentityPools/github/providers/havens-harvest-data
-        service_account: havens-harvest-data@data-projects-348920.iam.gserviceaccount.com
+        credentials_json: '${{ secrets.GCP_SERVICE_ACCT_JSON }}'
     
     - id: 'upload-file'
       uses: 'google-github-actions/upload-cloud-storage@v2'
