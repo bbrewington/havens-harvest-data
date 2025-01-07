@@ -45,7 +45,6 @@ def write_to_file(dest_file_path, csv_contents):
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--dest-file-path")
-    parser.add_argument("--days", type=int, default=90, help="Number of days for the date range (default: 90)")
     args = parser.parse_args()
 
     from_date, to_date, from_date_yyyymmdd, to_date_yyyymmdd = calculate_date_range(type="year_to_date")
