@@ -1,31 +1,13 @@
 import requests
 import pandas as pd
-from dotenv import load_dotenv
+
 from bs4 import BeautifulSoup
 
+from utility import calculate_date_range, get_env_vars
+
 import io
-import os
-import urllib
 from argparse import ArgumentParser
 from pathlib import Path
-from datetime import datetime, timedelta
-
-def get_env_vars():
-    load_dotenv()
-    username = os.getenv("FOOD_RESCUE_HERO_USERNAME")
-    password = os.getenv("FOOD_RESCUE_HERO_PASSWORD")
-    assert username and password, "One of Food Rescue Hero username or password env vars are empty"
-    return username, password
-
-def calculate_date_range(days):
-    to_date = datetime.now()
-    from_date = to_date - timedelta(days=days)
-    return (
-        urllib.parse.quote(from_date.strftime("%m/%d/%Y"), safe=""),
-        urllib.parse.quote(to_date.strftime("%m/%d/%Y"), safe=""),
-        from_date.strftime("%Y%m%d"),
-        to_date.strftime("%Y%m%d")
-    )
 
 def get_rescues_report(username, password, from_date, to_date):
     with requests.Session() as s:
@@ -66,7 +48,7 @@ if __name__ == "__main__":
     parser.add_argument("--days", type=int, default=90, help="Number of days for the date range (default: 90)")
     args = parser.parse_args()
 
-    from_date, to_date, from_date_yyyymmdd, to_date_yyyymmdd = calculate_date_range(args.days)
+    from_date, to_date, from_date_yyyymmdd, to_date_yyyymmdd = calculate_date_range(type="year_to_date")
 
     username, password = get_env_vars()
     csv_contents = get_rescues_report(username=username, password=password, from_date=from_date, to_date=to_date)
