@@ -28,13 +28,22 @@ jobs:
         env:
           FOOD_RESCUE_HERO_USERNAME: ${{ secrets.FOOD_RESCUE_HERO_USERNAME }}
           FOOD_RESCUE_HERO_PASSWORD: ${{ secrets.FOOD_RESCUE_HERO_PASSWORD }}
-        run: uv run python data/src/food_rescue_hero.py --dest-file-path tmp/csv/rescues --days 90
+        run: |
+          uv run python data/src/food_rescue_hero.py --dest-file-path tmp/csv/rescues --days 90
+          echo "Generated files:"
+          ls tmp/csv
       
       - name: Confirm CSV exists
         run: |
           echo 'Listing files in tmp/csv dir'
           ls tmp/csv
       
+      - name: Find the CSV File
+        id: find-file
+        run: |
+          FILE=$(ls tmp/csv/rescues_*.csv)
+          echo "CSV_FILE=$FILE" >> $GITHUB_ENV
+
       - name: GCP Auth
         uses: 'google-github-actions/auth@v2'
         with:
@@ -43,5 +52,5 @@ jobs:
       - name: Upload to GCS
         uses: 'google-github-actions/upload-cloud-storage@v2'
         with:
-          path: 'tmp/csv/rescues_*.csv'
+          path: ${{ env.CSV_FILE }}
           destination: havens-harvest-data
