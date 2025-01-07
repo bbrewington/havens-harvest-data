@@ -59,5 +59,5 @@ if __name__ == "__main__":
 
     username, password = get_env_vars()
     csv_contents = get_rescues_report(username=username, password=password, from_date=from_date, to_date=to_date)
-    dest_file_path = f"{args.dest_file_path}_{from_date_yyyymmdd}_{to_date_yyyymmdd}"
+    dest_file_path = f"{args.dest_file_path}_{from_date_yyyymmdd}_{to_date_yyyymmdd}.csv"
     write_to_file(dest_file_path=dest_file_path, csv_contents=csv_contents)
