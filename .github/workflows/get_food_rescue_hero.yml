@@ -2,7 +2,8 @@ name: Get Food Rescue Hero Data
 
 on:
   workflow_dispatch:
-
+  schedule:
+    - cron: '0 6 * * *'
 jobs:
   get-rescues-report:
     runs-on: ubuntu-latest
