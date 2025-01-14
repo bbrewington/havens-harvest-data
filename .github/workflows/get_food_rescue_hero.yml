@@ -13,8 +13,6 @@ jobs:
       
       - name: Install uv
         uses: astral-sh/setup-uv@v5
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Set up Python
         run: uv python install --project data
@@ -55,3 +53,4 @@ jobs:
         with:
           path: ${{ env.CSV_FILE }}
           destination: havens-harvest-data
+          process_gcloudignore: false
